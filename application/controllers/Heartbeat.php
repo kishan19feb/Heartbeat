@@ -3,9 +3,9 @@ require BASE;
 class Heartbeat extends Base {
     function index(){
         $request = Request();
-        $programCode = $request['program'];
+        $programCode = $request['programCode'];
         $entity = $request['category'];
-        $key = $request['key'];
+        $key = $request['clientKey'];
         $dbKey = $this->arrKeys[$programCode]['key'];
         $dbSecret = $this->arrKeys[$programCode]['secret'];
         $authKey = base64_encode($dbKey.":".$dbSecret);
