@@ -15,6 +15,8 @@ class Heartbeat extends Base {
             $count_2xx = $this->counts($entity, '2xx', $programCode);
             $count_4xx = $this->counts($entity, '4xx', $programCode);
             $count_5xx = $this->counts($entity, '5xx', $programCode);
+            $latency = $this->latency($entity, $programCode);
+            $latency = number_format((float)$latency  * 1000, 2, '.', '');
             $denom = ($count_2xx + $count_4xx + $count_5xx);
             if ($denom == 0){
                 $availablity = 0;
@@ -24,7 +26,8 @@ class Heartbeat extends Base {
             $response['status'] = ($availablity > 0) ? true : false;
             $response['data'] = array(
                 "reason" => "API Unavailable !",
-                "link" => $link
+                "link" => $link,
+                "latency" => $latency . " ms"
             );
         } else {
             $response['status'] = ($availablity > 0) ? true : false;
