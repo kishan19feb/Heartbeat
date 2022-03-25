@@ -5,7 +5,7 @@ class Maintenance extends Base {
     function downtime(){
         $response = file_get_contents("./configs/downtime.json");
         $response = json_decode($response,TRUE);
-        $current = getMillis(date('Y-m-d h:i'));
+        $current = getMillis(date('Y-m-d H:i'));
         $expiry = getMillis($response['day'] . " " . $response['to']);
         $response['status'] = $current < $expiry ? true : false;
         $this->output->set_output(json_encode($response));
