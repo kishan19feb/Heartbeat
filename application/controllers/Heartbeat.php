@@ -11,7 +11,7 @@ class Heartbeat extends Base {
         $authKey = base64_encode($dbKey.":".$dbSecret);
         $link = $this->arrLinks[$programCode][$entity];
         $response = array();
-        if($key == $authKey){
+        if ($key == $authKey){
             $count_2xx = $this->counts($entity, '2xx', $programCode);
             $count_4xx = $this->counts($entity, '4xx', $programCode);
             $count_5xx = $this->counts($entity, '5xx', $programCode);
@@ -25,7 +25,7 @@ class Heartbeat extends Base {
             }
             $response['status'] = ($availablity > 0) ? true : false;
             $response['data'] = array(
-                "reason" => "API Unavailable !",
+                "reason" => "",
                 "link" => $link,
                 "latency" => $latency . " ms"
             );
@@ -33,7 +33,7 @@ class Heartbeat extends Base {
             $response['status'] = ($availablity > 0) ? true : false;
             $response['data'] = array(
                 "reason" => "Authentication Error !",
-                "link" => $link
+                "link" => ""
             );
         }
         $this->output->set_output(json_encode($response));

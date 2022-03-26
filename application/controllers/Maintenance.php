@@ -24,10 +24,16 @@ class Maintenance extends Base {
             'to' => $to
         );
         $status = file_put_contents("./configs/downtime.json", json_encode($configs));
+        if ($status > 0){
+            $url = "https://eoz0oxfucmqftm1.m.pipedream.net";
+            $headers = array('Content-Type:application/json'); 
+            $curlResp = fireCurl($headers, $configs, $url);
+        }
         $response = array(
             'status' => ($status > 0) ? true : false,
             'data' => array(
-                'bytes' => ($status > 0) ? $status : 0
+                'bytes' => ($status > 0) ? $status : 0,
+                'cURL' => $curlResp
             )
         );
         $this->output->set_output(json_encode($response));
